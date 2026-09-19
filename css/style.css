@@ -1,0 +1,489 @@
+/* ===================================================================
+   Grand Archer Division — style.css
+   Landing page, desktop viewport only.
+   Palette + type per project style guide (Cinzel / Inter / Crimson Pro).
+=================================================================== */
+
+:root {
+  --void: #0B0906;
+  --charcoal: #1C1714;
+  --charcoal-soft: #221B16;
+  --ember: #A85C12;
+  --ember-bright: #C96F16;
+  --gold: #FFD230;
+  --parchment: #D9D0C1;
+  --muted: #8C8579;
+  --hairline: rgba(255, 210, 48, 0.22);
+
+  --font-display: "Cinzel", serif;
+  --font-ui: "Inter", sans-serif;
+  --font-body: "Crimson Pro", serif;
+
+  --page-max: 1180px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.65;
+  min-width: 1180px; /* desktop only build */
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.wrap {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Keyboard focus visibility, kept consistent across interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Header / persistent navigation
+   Uses the same charcoal as the footer per reviewer feedback,
+   instead of a header/footer color mismatch.
+--------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--charcoal);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.site-header .wrap {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wordmark .mark { color: var(--ember-bright); }
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.main-nav a {
+  color: var(--parchment);
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.main-nav a:hover { color: var(--gold); }
+
+.main-nav a.active {
+  color: var(--gold);
+  border-bottom: 2px solid var(--ember-bright);
+}
+
+.nav-login {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+.nav-login:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ---------------------------------------------------------------
+   Buttons
+--------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 15px 32px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--ember);
+  color: var(--void);
+  box-shadow: 0 0 0 rgba(201, 111, 22, 0);
+}
+
+.btn-primary:hover {
+  background: var(--ember-bright);
+  box-shadow: 0 6px 22px rgba(201, 111, 22, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--parchment);
+  color: var(--parchment);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ---------------------------------------------------------------
+   Hero
+--------------------------------------------------------------- */
+.hero {
+  position: relative;
+  height: 640px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--void);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gradient runs flush from the image's own bottom edge into the page
+   background, so the fade never looks clipped or offset. */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 9, 6, 0.15) 0%,
+    rgba(11, 9, 6, 0.55) 55%,
+    var(--void) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 64px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+  margin: 0 0 14px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 52px;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0 0 18px;
+  max-width: 14ch;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+}
+
+.hero h1 .accent { color: var(--gold); }
+
+.hero p {
+  font-family: var(--font-body);
+  font-size: 19px;
+  color: var(--parchment);
+  max-width: 46ch;
+  margin: 0 0 34px;
+}
+
+.hero-actions { display: flex; gap: 16px; }
+
+/* ---------------------------------------------------------------
+   Section rhythm
+   Alternating charcoal / void backgrounds give each section its own
+   depth instead of one flat black field, per reviewer feedback.
+--------------------------------------------------------------- */
+section { padding: 96px 0; }
+
+.section-charcoal {
+  background: linear-gradient(180deg, var(--charcoal) 0%, var(--charcoal-soft) 100%);
+  border-top: 2px solid var(--hairline);
+  border-bottom: 2px solid var(--hairline);
+}
+
+.section-tag {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ember-bright);
+  margin: 0 0 10px;
+}
+
+/* ---------------------------------------------------------------
+   Recruitment / about section
+--------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-grid h2 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  color: var(--gold);
+  margin: 0 0 6px;
+}
+
+.about-grid .subtitle {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 28px;
+}
+
+.about-grid p {
+  margin: 0 0 22px;
+  color: var(--parchment);
+  font-size: 18px;
+}
+
+.about-grid p:last-child { margin-bottom: 0; }
+
+.notice-card {
+  background: rgba(11, 9, 6, 0.55);
+  border: 1px solid var(--hairline);
+  border-left: 4px solid var(--ember-bright);
+  border-radius: 6px;
+  padding: 28px 30px;
+}
+
+.notice-card .notice-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ember-bright);
+  margin: 0 0 14px;
+}
+
+.notice-card blockquote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--gold);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------
+   Trailer section
+--------------------------------------------------------------- */
+.trailer {
+  text-align: center;
+}
+
+.trailer h2 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--gold);
+  margin: 0 0 12px;
+}
+
+.trailer > .wrap > p {
+  max-width: 56ch;
+  margin: 0 auto 44px;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.trailer-frame {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.trailer-frame img { width: 100%; }
+
+.play-button {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 9, 6, 0.28);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.play-button .disc {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--ember);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.play-button:hover .disc {
+  background: var(--ember-bright);
+  transform: scale(1.06);
+}
+
+.play-button svg { margin-left: 4px; }
+
+.trailer-caption {
+  margin-top: 18px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------
+   Newsletter / "Stay in the Know"
+--------------------------------------------------------------- */
+.newsletter { text-align: center; }
+
+.newsletter h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--gold);
+  margin: 0 0 14px;
+}
+
+.newsletter p {
+  max-width: 52ch;
+  margin: 0 auto 34px;
+  color: var(--parchment);
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.newsletter-form label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.newsletter-form input[type="email"] {
+  flex: 1;
+  background: var(--void);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 14px 20px;
+  color: var(--parchment);
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+.newsletter-form input[type="email"]::placeholder { color: var(--muted); }
+
+.newsletter-form .btn { border: none; }
+
+/* ---------------------------------------------------------------
+   Footer
+   Matches the header's charcoal panel per reviewer feedback.
+--------------------------------------------------------------- */
+.site-footer {
+  background: var(--charcoal);
+  border-top: 1px solid var(--hairline);
+  padding: 36px 0;
+}
+
+.site-footer .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a {
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.footer-links a:hover { color: var(--gold); }
