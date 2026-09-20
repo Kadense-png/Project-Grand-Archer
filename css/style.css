@@ -33,7 +33,7 @@ body {
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 1.65;
-  min-width: 1180px; /* desktop only build, make other viewports later */
+  min-width: 1180px; /* desktop only build, cba to make the other viewports rn*/
 }
 
 img { max-width: 100%; display: block; }
@@ -60,7 +60,7 @@ input:focus-visible {
 /* ---------------------------------------------------------------
    Header / persistent navigation
    Uses the same charcoal as the footer per reviewer feedback,
-   instead of a header/footer color mismatch. Oopsie
+   instead of a header/footer color mismatch. Oopsie madilim kasi
 --------------------------------------------------------------- */
 .site-header {
   position: sticky;
@@ -200,7 +200,7 @@ input:focus-visible {
   object-fit: cover;
 }
 
-/* Gradient */
+/* Gradient stuff */
 .hero-media::after {
   content: "";
   position: absolute;
@@ -255,7 +255,7 @@ input:focus-visible {
    Section rhythm
    Alternating charcoal / void backgrounds give each section its own
    depth instead of one flat black field, per reviewer feedback.
-   Di daw kasi nila kita.
+   Di daw kasi kita.
 --------------------------------------------------------------- */
 section { padding: 96px 0; }
 
@@ -432,7 +432,7 @@ section { padding: 96px 0; }
 .newsletter-form .btn { border: none; }
 
 /* ---------------------------------------------------------------
-   Sub-page hero 
+   Sub-page hero
 --------------------------------------------------------------- */
 .page-hero {
   position: relative;
