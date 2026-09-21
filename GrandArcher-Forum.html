@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hunter Forum — Grand ☆ Archer Division</title>
+<meta name="description" content="An anonymous, searchable board for Bow and ranged hunters to ask and answer questions without judgment.">
+<link rel="icon" type="image/svg+xml" href="imgs/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="GrandArcher-Index.html" class="wordmark"><span class="mark">☆</span> Grand Archer</a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="GrandArcher-Index.html">Hall</a></li>
+        <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
+        <li><a href="GrandArcher-Forge.html">Forge</a></li>
+        <li><a href="GrandArcher-Forum.html" class="active">Forum</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+      <a href="#" class="nav-login">Log In</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Sub-page hero -->
+  <section class="page-hero" aria-label="Hunter Forum">
+    <div class="hero-media">
+      <img src="imgs/forumHero.jpg" alt="A hunter reading through a worn field journal near camp.">
+    </div>
+    <div class="hero-content">
+      <div class="wrap">
+        <p class="hero-eyebrow">Field Manual &middot; Community</p>
+        <h1>Hunter Forum</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="page-intro">
+    <div class="wrap">
+      <h2>Ask Without Judgment</h2>
+      <p>An anonymous, searchable board where hunters can ask and answer Bow questions — no melee opinions required. Pinned notices from the Division sit up top; everything else runs newest-first below.</p>
+    </div>
+  </section>
+
+  <section class="forum-section">
+    <div class="wrap">
+
+      <div class="demo-notice">
+        <p><strong>Demo notice:</strong> this board runs entirely in your browser — no server. Posts, pins, and moderator changes are saved to <em>this browser only</em> via localStorage and won't sync to other devices. Use the identity switcher below to preview what a moderator can do.</p>
+        <button class="btn-small" id="reset-demo" type="button">Reset Demo Data</button>
+      </div>
+
+      <div class="identity-bar">
+        <div class="identity-group">
+          <label for="identity-select">Viewing as</label>
+          <select id="identity-select" aria-label="Switch current hunter"></select>
+          <span id="identity-role"></span>
+        </div>
+        <form id="add-hunter-form">
+          <label for="new-hunter-name" class="visually-hidden">New hunter name</label>
+          <input type="text" id="new-hunter-name" placeholder="Add a new hunter&hellip;" maxlength="24">
+          <button type="submit" class="btn-small">Add &amp; Switch</button>
+        </form>
+      </div>
+
+      <form class="new-post" id="new-post-form">
+        <h2>Post to the Board</h2>
+        <label for="post-title">Title</label>
+        <input type="text" id="post-title" placeholder="What's your question or topic?" required maxlength="120">
+        <label for="post-body">Details</label>
+        <textarea id="post-body" placeholder="Give hunters enough to go on&hellip;" required maxlength="1000"></textarea>
+        <button type="submit" class="btn btn-primary">Post to the Board</button>
+      </form>
+
+      <section id="pinned-section">
+        <h2 class="forum-heading">Pinned</h2>
+        <ul class="thread-list" id="pinned-list"></ul>
+      </section>
+
+      <section>
+        <h2 class="forum-heading">All Threads</h2>
+        <ul class="thread-list" id="thread-list"></ul>
+      </section>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; 2026 Grand Archer Division. Unofficial fan hall for Monster Hunter Wilds.</p>
+    <ul class="footer-links">
+      <li><a href="GrandArcher-Index.html">Hall</a></li>
+      <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
+      <li><a href="GrandArcher-Forge.html">Forge</a></li>
+      <li><a href="GrandArcher-Forum.html">Forum</a></li>
+      <li><a href="#">Profile</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/forum.js"></script>
+</body>
+</html>
