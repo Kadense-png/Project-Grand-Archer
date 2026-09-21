@@ -33,7 +33,7 @@ body {
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 1.65;
-  min-width: 1180px; /* desktop only build, cba to make the other viewports rn*/
+  min-width: 1180px; /* desktop only build */
 }
 
 img { max-width: 100%; display: block; }
@@ -60,7 +60,7 @@ input:focus-visible {
 /* ---------------------------------------------------------------
    Header / persistent navigation
    Uses the same charcoal as the footer per reviewer feedback,
-   instead of a header/footer color mismatch. Oopsie madilim kasi
+   instead of a header/footer color mismatch.
 --------------------------------------------------------------- */
 .site-header {
   position: sticky;
@@ -200,7 +200,8 @@ input:focus-visible {
   object-fit: cover;
 }
 
-/* Gradient stuff */
+/* Gradient runs flush from the image's own bottom edge into the page
+   background, so the fade never looks clipped or offset. */
 .hero-media::after {
   content: "";
   position: absolute;
@@ -255,7 +256,6 @@ input:focus-visible {
    Section rhythm
    Alternating charcoal / void backgrounds give each section its own
    depth instead of one flat black field, per reviewer feedback.
-   Di daw kasi kita.
 --------------------------------------------------------------- */
 section { padding: 96px 0; }
 
@@ -432,7 +432,7 @@ section { padding: 96px 0; }
 .newsletter-form .btn { border: none; }
 
 /* ---------------------------------------------------------------
-   Sub-page hero
+   Sub-page hero (shorter than the landing hero, no CTA row)
 --------------------------------------------------------------- */
 .page-hero {
   position: relative;
@@ -463,7 +463,7 @@ section { padding: 96px 0; }
 .page-hero p { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------
-   Page intro
+   Page intro (short lede under a sub-page hero)
 --------------------------------------------------------------- */
 .page-intro { padding-bottom: 64px; }
 .page-intro .wrap { max-width: 780px; text-align: center; }
@@ -575,6 +575,91 @@ section { padding: 96px 0; }
 }
 
 /* ---------------------------------------------------------------
+   Forge / Builds page
+--------------------------------------------------------------- */
+.build-block {
+  padding: 76px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.build-header {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.build-header h3 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--gold);
+  margin: 0;
+}
+
+.build-weapon {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 40px;
+}
+
+.build-weapon strong { color: var(--parchment); font-weight: 600; }
+
+.build-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.build-card {
+  background: rgba(11, 9, 6, 0.4);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.build-card .build-card-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember-bright);
+  margin: 0 0 14px;
+}
+
+.build-card img {
+  width: 100%;
+  height: 340px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.build-desc {
+  max-width: 74ch;
+}
+
+.build-desc .desc-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember-bright);
+  margin: 0 0 12px;
+}
+
+.build-desc p {
+  font-size: 18px;
+  color: var(--parchment);
+  margin: 0;
+}
+/* ---------------------------------------------------------------
    Comparison table
 --------------------------------------------------------------- */
 .comparison { text-align: center; }
@@ -623,6 +708,7 @@ section { padding: 96px 0; }
 .comparison tbody tr:last-child td { border-bottom: none; }
 /* ---------------------------------------------------------------
    Footer
+   Matches the header's charcoal panel per reviewer feedback.
 --------------------------------------------------------------- */
 .site-footer {
   background: var(--charcoal);
