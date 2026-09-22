@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hunter Profile — Grand ☆ Archer Division</title>
+<meta name="description" content="Your standing in the Grand Archer Division — threads started, replies posted, and your favored Bow build.">
+<link rel="icon" type="image/svg+xml" href="imgs/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="GrandArcher-Index.html" class="wordmark"><span class="mark">☆</span> Grand Archer</a>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="GrandArcher-Index.html">Hall</a></li>
+        <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
+        <li><a href="GrandArcher-Forge.html">Forge</a></li>
+        <li><a href="GrandArcher-Forum.html">Forum</a></li>
+        <li><a href="GrandArcher-Profile.html" class="active">Profile</a></li>
+      </ul>
+      <a href="#" class="nav-login">Log In</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="profile-hero" aria-label="Hunter Profile">
+    <div class="wrap">
+      <p class="hero-eyebrow">Field Manual &middot; Your Standing</p>
+      <h1>Hunter Profile</h1>
+    </div>
+  </section>
+
+  <section class="profile-section">
+    <div class="wrap" id="profile-root">
+      <!-- Rendered by profile.js, based on whoever auth.js says is logged in -->
+      <noscript>
+        <div class="profile-guest">
+          <p class="section-tag">JavaScript Required</p>
+          <h2>Enable Scripts to Log In</h2>
+          <p>The Hunter Profile is generated from your Forum activity in the browser, and needs JavaScript enabled to work.</p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>&copy; 2026 Grand Archer Division. Unofficial fan hall for Monster Hunter Wilds.</p>
+    <ul class="footer-links">
+      <li><a href="GrandArcher-Index.html">Hall</a></li>
+      <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
+      <li><a href="GrandArcher-Forge.html">Forge</a></li>
+      <li><a href="GrandArcher-Forum.html">Forum</a></li>
+      <li><a href="GrandArcher-Profile.html">Profile</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>
