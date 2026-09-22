@@ -23,7 +23,7 @@
         <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
         <li><a href="GrandArcher-Forge.html">Forge</a></li>
         <li><a href="GrandArcher-Forum.html" class="active">Forum</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="GrandArcher-Profile.html">Profile</a></li>
       </ul>
       <a href="#" class="nav-login">Log In</a>
     </nav>
@@ -56,9 +56,10 @@
   <section class="forum-section">
     <div class="wrap">
 
-      <div class="demo-notice">
-        <p><strong>Demo notice:</strong> this board runs entirely in your browser — no server. Posts, pins, and moderator changes are saved to <em>this browser only</em> via localStorage and won't sync to other devices. Use the identity switcher below to preview what a moderator can do.</p>
-        <button class="btn-small" id="reset-demo" type="button">Reset Demo Data</button>
+      <div class="forum-toolbar">
+        <label for="forum-search" class="visually-hidden">Search questions, keywords, tags</label>
+        <input type="text" id="forum-search" placeholder="Search questions, keywords, tags&hellip;">
+        <button type="button" class="btn btn-primary" id="ask-question-btn">+ Ask a Question</button>
       </div>
 
       <div class="identity-bar">
@@ -74,14 +75,23 @@
         </form>
       </div>
 
-      <form class="new-post" id="new-post-form">
-        <h2>Post to the Board</h2>
-        <label for="post-title">Title</label>
-        <input type="text" id="post-title" placeholder="What's your question or topic?" required maxlength="120">
-        <label for="post-body">Details</label>
-        <textarea id="post-body" placeholder="Give hunters enough to go on&hellip;" required maxlength="1000"></textarea>
-        <button type="submit" class="btn btn-primary">Post to the Board</button>
-      </form>
+      <div class="demo-notice">
+        <p><strong>Demo notice:</strong> this board runs entirely in your browser — no server. Posts, pins, votes, and moderator changes are saved to <em>this browser only</em> via localStorage and won't sync to other devices. Use the identity switcher above to preview what a moderator can do.</p>
+        <button class="btn-small" id="reset-demo" type="button">Reset Demo Data</button>
+      </div>
+
+      <div class="new-post-wrapper" id="new-post-wrapper">
+        <form class="new-post" id="new-post-form">
+          <h2>Post to the Board</h2>
+          <label for="post-title">Title</label>
+          <input type="text" id="post-title" placeholder="What's your question or topic?" required maxlength="120">
+          <label for="post-body">Details</label>
+          <textarea id="post-body" placeholder="Give hunters enough to go on&hellip;" required maxlength="1000"></textarea>
+          <label for="post-tags">Tags <span class="field-hint">(comma-separated, up to 4)</span></label>
+          <input type="text" id="post-tags" placeholder="Question, Dragonpiercer&hellip;" maxlength="80">
+          <button type="submit" class="btn btn-primary">Post to the Board</button>
+        </form>
+      </div>
 
       <section id="pinned-section">
         <h2 class="forum-heading">Pinned</h2>
@@ -106,7 +116,7 @@
       <li><a href="GrandArcher-Playstyles.html">Playstyles</a></li>
       <li><a href="GrandArcher-Forge.html">Forge</a></li>
       <li><a href="GrandArcher-Forum.html">Forum</a></li>
-      <li><a href="#">Profile</a></li>
+      <li><a href="GrandArcher-Profile.html">Profile</a></li>
     </ul>
   </div>
 </footer>
