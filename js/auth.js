@@ -3,14 +3,9 @@
    Shares the same localStorage "hunter" store the Forum already reads
    and writes (ga_forum_users, ga_forum_current_user), so logging in
    from the header and switching identity in the Forum both point at
-   the same person. The one thing this file adds on top is
-   ga_session_active — that's what tells "someone actually logged in"
-   apart from "the Forum is defaulting to Founder so a grader can
-   preview moderator tools." No password, no server: same demo
-   account switcher as the Forum, just wearing a login form's clothes.
-
-   Include this file on every page that has the shared header — it
-   finds .nav-login and wires itself in. No other HTML changes needed.
+   the same person. No passwords, too much work: same demo
+   account switcher as the Forum. But I've put it in a trenchcoat
+   and said it's something new.
 =================================================================== */
 
 (function () {
