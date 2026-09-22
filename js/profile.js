@@ -1,12 +1,18 @@
 /* ===================================================================
    Grand Archer Division — Hunter Profile
-   No separate profile database — this reads the same ga_forum_posts
-   the Forum writes to and counts up whoever's logged in (auth.js).
-   Your stats are just your Forum activity, tallied.
+   Stats are computed from the Forum's own localStorage data (no
+   separate profile database). Avatar, favored build, and bio are
+   editable and saved via GAAuth's profile-meta store — also
+   localStorage, also this-browser-only, same as everything else in
+   this demo.
 =================================================================== */
 
 (function () {
   const POSTS_KEY = "ga_forum_posts";
+  const MAX_AVATAR_UPLOAD_BYTES = 10 * 1024 * 1024; // 10MB — generous, canvas resize handles the rest
+  const AVATAR_SIZE = 240; // px, square, after resize
+
+  let editing = false;
 
   function loadPosts() {
     try { return JSON.parse(localStorage.getItem(POSTS_KEY)) || []; }
@@ -19,39 +25,11 @@
     return div.innerHTML;
   }
 
-  function timeAgo(ts) {
-    const sec = Math.floor((Date.now() - ts) / 1000);
-    if (sec < 60) return "just now";
-    const min = Math.floor(sec / 60);
-    if (min < 60) return `${min} minute${min !== 1 ? "s" : ""} ago`;
-    const hr = Math.floor(min / 60);
-    if (hr < 24) return `${hr} hour${hr !== 1 ? "s" : ""} ago`;
-    const day = Math.floor(hr / 24);
-    if (day < 30) return `${day} day${day !== 1 ? "s" : ""} ago`;
-    const mo = Math.floor(day / 30);
-    if (mo < 12) return `${mo} month${mo !== 1 ? "s" : ""} ago`;
-    const yr = Math.floor(mo / 12);
-    return `${yr} year${yr !== 1 ? "s" : ""} ago`;
-  }
-
-  function rankTitle(threads, replies) {
-    const total = threads + replies;
-    if (total === 0) return "Trainee";
-    if (total < 5) return "Field Hunter";
-    if (total < 15) return "Seasoned Archer";
-    return "Veteran of the Division";
-  }
-
-  /* "Favored build" is just whichever playstyle tag shows up most
-     often across the hunter's own threads — real signal instead of
-     a field they'd have to fill in and keep up to date themselves. */
-  function favoredTag(posts, name) {
-    const counts = {};
-    posts.filter(p => p.author === name).forEach(p => {
-      (p.tags || []).forEach(t => { counts[t] = (counts[t] || 0) + 1; });
-    });
-    const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-    return entries.length ? entries[0][0] : "Not decided yet";
+  function rankTitle(activity) {
+    if (activity === 0) return "Trainee";
+    if (activity < 5) return "Field Hunter";
+    if (activity < 15) return "Seasoned Archer";
+    return "Veteran Archer";
   }
 
   function likesReceived(posts, name) {
@@ -60,30 +38,153 @@
       .reduce((sum, p) => sum + (p.likedBy ? p.likedBy.length : 0), 0);
   }
 
-  function buildActivity(posts, name) {
-    const items = [];
-    posts.forEach(p => {
-      if (p.author === name) {
-        items.push({ type: "thread", title: p.title, id: p.id, timestamp: p.timestamp, snippet: p.body });
-      }
-      (p.replies || []).forEach(r => {
-        if (r.author === name) {
-          items.push({ type: "reply", title: p.title, id: p.id, timestamp: r.timestamp, snippet: r.body });
-        }
-      });
-    });
-    return items.sort((a, b) => b.timestamp - a.timestamp).slice(0, 6);
+  function computeStats(posts, name) {
+    const threads = posts.filter(p => p.author === name).length;
+    let replies = 0;
+    posts.forEach(p => (p.replies || []).forEach(r => { if (r.author === name) replies++; }));
+    const likes = likesReceived(posts, name);
+    const totalPosts = threads + replies;
+    // Flavor stats only — not meant to model the real games' numbers,
+    // just to scale up with activity and look the part.
+    const hunterRank = 1 + threads * 4 + replies * 2 + Math.floor(likes / 3);
+    const karma = likes * 3 + totalPosts * 2;
+    return { threads, replies, likes, totalPosts, hunterRank, karma };
   }
 
-  function activityItemHTML(item) {
-    const label = item.type === "thread" ? "Started a thread" : "Replied to";
-    const snippet = item.snippet.length > 130 ? item.snippet.slice(0, 130).trim() + "…" : item.snippet;
+  function recentThreads(posts, name, limit) {
+    return posts
+      .filter(p => p.author === name)
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, limit);
+  }
+
+  /* -----------------------------------------------------------------
+     Avatar upload — read the file, draw it into a square canvas at a
+     fixed max size, and export a compact JPEG data URL. Keeps
+     localStorage usage sane regardless of how big the source photo is.
+  ----------------------------------------------------------------- */
+  function resizeImageFile(file) {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith("image/")) {
+        reject(new Error("That's not an image file."));
+        return;
+      }
+      if (file.size > MAX_AVATAR_UPLOAD_BYTES) {
+        reject(new Error("That image is too large — try something under 10MB."));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error("Couldn't read that file."));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error("Couldn't load that image."));
+        img.onload = () => {
+          const side = Math.min(img.width, img.height);
+          const sx = (img.width - side) / 2;
+          const sy = (img.height - side) / 2;
+          const canvas = document.createElement("canvas");
+          canvas.width = AVATAR_SIZE;
+          canvas.height = AVATAR_SIZE;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, sx, sy, side, side, 0, 0, AVATAR_SIZE, AVATAR_SIZE);
+          resolve(canvas.toDataURL("image/jpeg", 0.85));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* -----------------------------------------------------------------
+     Markup
+  ----------------------------------------------------------------- */
+  const DEFAULT_AVATAR_SVG = `
+    <svg viewBox="0 0 24 24" class="avatar-default-icon" aria-hidden="true">
+      <circle cx="12" cy="8" r="4" fill="currentColor"/>
+      <path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="currentColor"/>
+    </svg>
+  `;
+
+  function avatarHTML(avatarSrc) {
+    return avatarSrc
+      ? `<img src="${avatarSrc}" alt="">`
+      : DEFAULT_AVATAR_SVG;
+  }
+
+  function buildOptionsHTML(selected) {
+    return window.GAAuth.PROFILE_BUILD_OPTIONS
+      .map(opt => `<option value="${escapeHTML(opt)}" ${opt === selected ? "selected" : ""}>${escapeHTML(opt)}</option>`)
+      .join("");
+  }
+
+  function sidebarHTML(d) {
+    const favoredDisplay = editing
+      ? `<select class="favored-select" id="favored-build-select">
+           <option value="" ${!d.favoredBuild ? "selected" : ""}>Not set</option>
+           ${buildOptionsHTML(d.favoredBuild)}
+         </select>`
+      : `<p class="favored-value">${d.favoredBuild ? escapeHTML(d.favoredBuild) : "Not set yet"}</p>`;
+
+    const actions = editing
+      ? `<button type="button" class="btn btn-primary profile-save">Save</button>
+         <button type="button" class="btn-small profile-cancel">Cancel</button>`
+      : `<button type="button" class="btn-small profile-edit-toggle">Edit Profile</button>
+         <button type="button" class="btn-small profile-change-avatar">Change Avatar</button>`;
+
     return `
-      <li class="activity-item">
-        <span class="activity-kind">${label}</span>
-        <a href="GrandArcher-Forum.html#post-${item.id}" class="activity-title">${escapeHTML(item.title)}</a>
-        <p class="activity-snippet">${escapeHTML(snippet)}</p>
-        <span class="activity-time">${timeAgo(item.timestamp)}</span>
+      <div class="profile-sidebar">
+        <div class="profile-avatar-circle">${avatarHTML(d.avatar)}</div>
+        <input type="file" accept="image/*" id="avatar-input" class="visually-hidden">
+        <p class="avatar-error" hidden></p>
+
+        <h2 class="profile-name">${escapeHTML(d.name)}</h2>
+        <p class="profile-hr-line">HR ${d.hunterRank} &middot; ${d.rank}</p>
+
+        <div class="profile-favored-block">
+          <p class="favored-label">Favored Build</p>
+          ${favoredDisplay}
+        </div>
+
+        <div class="profile-sidebar-actions">
+          ${actions}
+          <button type="button" class="btn-small profile-logout">Log Out</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function mainHTML(d) {
+    const bioBlock = editing
+      ? `<textarea id="bio-textarea" class="about-textarea" maxlength="400" placeholder="Tell the Division a bit about how you hunt&hellip;">${escapeHTML(d.bio || "")}</textarea>`
+      : `<div class="about-box">${d.bio ? escapeHTML(d.bio).replace(/\n/g, "<br>") : `<span class="empty-state">No bio yet — click Edit Profile to add one.</span>`}</div>`;
+
+    return `
+      <div class="profile-main">
+        <p class="section-tag">About Me</p>
+        ${bioBlock}
+
+        <p class="section-tag profile-stats-tag">Stats</p>
+        <div class="profile-stats">
+          <div class="stat"><span class="stat-value">${d.hunterRank}</span><span class="stat-label">Hunter Rank</span></div>
+          <div class="stat"><span class="stat-value">${d.totalPosts}</span><span class="stat-label">Posts</span></div>
+          <div class="stat"><span class="stat-value">${d.likes}</span><span class="stat-label">Total Likes</span></div>
+          <div class="stat"><span class="stat-value">${d.karma.toLocaleString()}</span><span class="stat-label">Karma</span></div>
+        </div>
+
+        <p class="section-tag">Recent Posts</p>
+        ${d.recent.length
+          ? `<ul class="posts-list">${d.recent.map(postRowHTML).join("")}</ul>`
+          : `<p class="empty-state">No threads started yet — head to the <a href="GrandArcher-Forum.html">Forum</a> and introduce yourself.</p>`}
+      </div>
+    `;
+  }
+
+  function postRowHTML(post) {
+    const likeCount = post.likedBy ? post.likedBy.length : 0;
+    return `
+      <li class="post-row">
+        <a href="GrandArcher-Forum.html#post-${post.id}" class="post-row-title">${escapeHTML(post.title)}</a>
+        <span class="post-row-likes">&#128077; ${likeCount}</span>
       </li>
     `;
   }
@@ -123,6 +224,9 @@
     `;
   }
 
+  /* -----------------------------------------------------------------
+     Wiring
+  ----------------------------------------------------------------- */
   function wireLoggedOut(root) {
     root.querySelectorAll(".auth-tab").forEach(tab => {
       tab.addEventListener("click", () => {
@@ -156,49 +260,59 @@
     }
   }
 
-  function profileHTML(d) {
-    const joinedLine = d.joined
-      ? "Joined " + new Date(d.joined).toLocaleDateString(undefined, { month: "long", year: "numeric" })
-      : "Founding Hunter";
-    const roleLabel = d.role === "member" ? "Member" : d.role.charAt(0).toUpperCase() + d.role.slice(1);
-
-    return `
-      <div class="profile-card">
-        <div class="profile-identity">
-          <span class="profile-avatar" aria-hidden="true">${escapeHTML(d.name.charAt(0).toUpperCase())}</span>
-          <div class="profile-identity-text">
-            <h2>${escapeHTML(d.name)}</h2>
-            <div class="profile-badges">
-              <span class="role-badge ${d.role}">${roleLabel}</span>
-              <span class="rank-badge">${d.rank}</span>
-            </div>
-            <p class="profile-joined">${joinedLine}</p>
-          </div>
-          <button type="button" class="btn-small profile-logout">Log Out</button>
-        </div>
-
-        <div class="profile-stats">
-          <div class="stat"><span class="stat-value">${d.threads}</span><span class="stat-label">Threads</span></div>
-          <div class="stat"><span class="stat-value">${d.replies}</span><span class="stat-label">Replies</span></div>
-          <div class="stat"><span class="stat-value">${d.likes}</span><span class="stat-label">Likes Received</span></div>
-          <div class="stat"><span class="stat-value">L${d.level}</span><span class="stat-label">Hunter Level</span></div>
-        </div>
-
-        <p class="profile-favored"><span class="section-tag">Favored Build</span>${escapeHTML(d.tag)}</p>
-      </div>
-
-      <div class="profile-activity">
-        <h2 class="forum-heading">Recent Activity</h2>
-        ${d.activity.length
-          ? `<ul class="activity-list">${d.activity.map(activityItemHTML).join("")}</ul>`
-          : `<p class="empty-state">No activity yet — head to the <a href="GrandArcher-Forum.html">Forum</a> and introduce yourself.</p>`}
-      </div>
-    `;
-  }
-
-  function wireProfile(root) {
+  function wireProfile(root, name) {
     const logoutBtn = root.querySelector(".profile-logout");
     if (logoutBtn) logoutBtn.addEventListener("click", () => window.GAAuth.logout());
+
+    const editToggle = root.querySelector(".profile-edit-toggle");
+    if (editToggle) editToggle.addEventListener("click", () => { editing = true; render(); });
+
+    const cancelBtn = root.querySelector(".profile-cancel");
+    if (cancelBtn) cancelBtn.addEventListener("click", () => { editing = false; render(); });
+
+    const saveBtn = root.querySelector(".profile-save");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", () => {
+        const select = root.querySelector("#favored-build-select");
+        const textarea = root.querySelector("#bio-textarea");
+        window.GAAuth.updateProfile(name, {
+          favoredBuild: select ? select.value || null : undefined,
+          bio: textarea ? textarea.value.trim() : undefined
+        });
+        editing = false;
+        render();
+      });
+    }
+
+    const avatarInput = root.querySelector("#avatar-input");
+    const changeAvatarBtn = root.querySelector(".profile-change-avatar");
+    const avatarCircle = root.querySelector(".profile-avatar-circle");
+    const avatarError = root.querySelector(".avatar-error");
+    if (changeAvatarBtn && avatarInput) {
+      changeAvatarBtn.addEventListener("click", () => avatarInput.click());
+    }
+    if (avatarCircle && avatarInput) {
+      avatarCircle.addEventListener("click", () => avatarInput.click());
+      avatarCircle.style.cursor = "pointer";
+    }
+    if (avatarInput) {
+      avatarInput.addEventListener("change", () => {
+        const file = avatarInput.files && avatarInput.files[0];
+        if (!file) return;
+        if (avatarError) avatarError.hidden = true;
+        resizeImageFile(file)
+          .then(dataUrl => {
+            window.GAAuth.updateProfile(name, { avatar: dataUrl });
+          })
+          .catch(err => {
+            if (avatarError) {
+              avatarError.hidden = false;
+              avatarError.textContent = err.message;
+            }
+          })
+          .finally(() => { avatarInput.value = ""; });
+      });
+    }
   }
 
   function render() {
@@ -208,31 +322,28 @@
     const name = window.GAAuth.getCurrentUser();
 
     if (!name) {
+      editing = false;
       root.innerHTML = loggedOutHTML();
       wireLoggedOut(root);
       return;
     }
 
     const posts = loadPosts();
-    const threads = posts.filter(p => p.author === name).length;
-    let replies = 0;
-    posts.forEach(p => (p.replies || []).forEach(r => { if (r.author === name) replies++; }));
+    const stats = computeStats(posts, name);
+    const profile = window.GAAuth.getProfile(name);
 
-    const data = {
+    const data = Object.assign({
       name,
       role: window.GAAuth.role(name),
-      joined: window.GAAuth.joinedAt(name),
-      threads,
-      replies,
-      likes: likesReceived(posts, name),
-      level: 1 + Math.floor((threads * 3 + replies) / 5),
-      rank: rankTitle(threads, replies),
-      tag: favoredTag(posts, name),
-      activity: buildActivity(posts, name)
-    };
+      avatar: profile.avatar || null,
+      favoredBuild: profile.favoredBuild || null,
+      bio: profile.bio || "",
+      rank: rankTitle(stats.totalPosts),
+      recent: recentThreads(posts, name, 5)
+    }, stats);
 
-    root.innerHTML = profileHTML(data);
-    wireProfile(root);
+    root.innerHTML = `<div class="profile-layout">${sidebarHTML(data)}${mainHTML(data)}</div>`;
+    wireProfile(root, name);
   }
 
   document.addEventListener("DOMContentLoaded", render);
