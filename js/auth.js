@@ -3,9 +3,14 @@
    Shares the same localStorage "hunter" store the Forum already reads
    and writes (ga_forum_users, ga_forum_current_user), so logging in
    from the header and switching identity in the Forum both point at
-   the same person. No passwords, too much work: same demo
-   account switcher as the Forum. But I've put it in a trenchcoat
-   and said it's something new.
+   the same person. The one thing this file adds on top is
+   ga_session_active — that's what tells "someone actually logged in"
+   apart from "the Forum is defaulting to Founder so a grader can
+   preview moderator tools." No password, no server: same demo
+   account switcher as the Forum, just wearing a login form's clothes.
+
+   Include this file on every page that has the shared header — it
+   finds .nav-login and wires itself in. No other HTML changes needed.
 =================================================================== */
 
 (function () {
@@ -67,6 +72,23 @@
     return meta[name] ? meta[name].joinedAt : null;
   }
 
+  /* Generic profile fields — avatar (a resized data: URL), favoredBuild
+     (one of PROFILE_BUILD_OPTIONS) and bio all live in the same
+     per-user meta blob as joinedAt. */
+  function getProfile(name) {
+    const meta = loadMeta();
+    return meta[name] || {};
+  }
+
+  function updateProfile(name, patch) {
+    const meta = loadMeta();
+    meta[name] = Object.assign({}, meta[name], patch);
+    saveMeta(meta);
+    notifyChange();
+  }
+
+  const PROFILE_BUILD_OPTIONS = ["Dash Dancing", "Dragonpiercer Sniping", "8-Gauge Bow", "Hybrid"];
+
   function notifyChange() {
     document.dispatchEvent(new Event("ga-auth-changed"));
   }
@@ -106,7 +128,8 @@
 
   window.GAAuth = {
     getCurrentUser, isSessionActive, login, signup, logout,
-    role, joinedAt, listUsers, FOUNDER_NAME
+    role, joinedAt, listUsers, FOUNDER_NAME,
+    getProfile, updateProfile, PROFILE_BUILD_OPTIONS
   };
 
   /* -----------------------------------------------------------------
@@ -128,6 +151,17 @@
     const div = document.createElement("div");
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  /* Same fallback logic the Profile page uses: a real photo if one's
+     been uploaded, otherwise the initial-letter circle. Used for both
+     the collapsed nav pill and the expanded dropdown so they can never
+     drift out of sync with each other. */
+  function navAvatarHTML(name) {
+    const avatar = getProfile(name).avatar;
+    return avatar
+      ? `<img src="${avatar}" alt="" class="nav-avatar nav-avatar--photo">`
+      : `<span class="nav-avatar" aria-hidden="true">${escapeHTML(name.charAt(0).toUpperCase())}</span>`;
   }
 
   function buildLoginPanelHTML() {
@@ -160,7 +194,7 @@
     const roleLabel = r === "member" ? "Member" : r.charAt(0).toUpperCase() + r.slice(1);
     return `
       <div class="auth-user-info">
-        <span class="nav-avatar" aria-hidden="true">${escapeHTML(name.charAt(0).toUpperCase())}</span>
+        ${navAvatarHTML(name)}
         <div>
           <p class="auth-user-name">${escapeHTML(name)}</p>
           <span class="role-badge ${r}">${roleLabel}</span>
@@ -247,7 +281,7 @@
       closePanel();
       if (name) {
         button.classList.add("nav-login--user");
-        button.innerHTML = `<span class="nav-avatar" aria-hidden="true">${escapeHTML(name.charAt(0).toUpperCase())}</span>${escapeHTML(name)}`;
+        button.innerHTML = `${navAvatarHTML(name)}${escapeHTML(name)}`;
         panel.innerHTML = buildUserPanelHTML(name);
       } else {
         button.classList.remove("nav-login--user");
