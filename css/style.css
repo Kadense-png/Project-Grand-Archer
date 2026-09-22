@@ -1,8 +1,8 @@
-/* 
+/* ===================================================================
    Grand Archer Division — style.css
    Landing page, desktop viewport only.
    Palette + type per project style guide (Cinzel / Inter / Crimson Pro).
-*/
+=================================================================== */
 
 :root {
   --void: #0B0906;
@@ -66,11 +66,11 @@ input:focus-visible {
   clip: rect(0 0 0 0);
 }
 
-/*
+/* ---------------------------------------------------------------
    Header / persistent navigation
    Uses the same charcoal as the footer per reviewer feedback,
    instead of a header/footer color mismatch.
-*/
+--------------------------------------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -151,9 +151,9 @@ input:focus-visible {
   border-color: var(--gold);
 }
 
-/* 
+/* ---------------------------------------------------------------
    Buttons
- */
+--------------------------------------------------------------- */
 .btn {
   display: inline-block;
   font-family: var(--font-ui);
@@ -191,9 +191,9 @@ input:focus-visible {
   color: var(--gold);
 }
 
-/*
+/* ---------------------------------------------------------------
    Hero
-*/
+--------------------------------------------------------------- */
 .hero {
   position: relative;
   height: 640px;
@@ -266,11 +266,11 @@ input:focus-visible {
 
 .hero-actions { display: flex; gap: 16px; }
 
-/*
+/* ---------------------------------------------------------------
    Section rhythm
    Alternating charcoal / void backgrounds give each section its own
    depth instead of one flat black field, per reviewer feedback.
-*/
+--------------------------------------------------------------- */
 section { padding: 96px 0; }
 
 .section-charcoal {
@@ -288,9 +288,9 @@ section { padding: 96px 0; }
   margin: 0 0 10px;
 }
 
-/*
+/* ---------------------------------------------------------------
    Recruitment / about section
-*/
+--------------------------------------------------------------- */
 .about-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -348,9 +348,9 @@ section { padding: 96px 0; }
   line-height: 1.6;
 }
 
-/*
+/* ---------------------------------------------------------------
    Trailer section
-*/
+--------------------------------------------------------------- */
 .trailer {
   text-align: center;
 }
@@ -396,9 +396,9 @@ section { padding: 96px 0; }
   color: var(--muted);
 }
 
-/*
+/* ---------------------------------------------------------------
    Newsletter / "Stay in the Know"
-*/
+--------------------------------------------------------------- */
 .newsletter { text-align: center; }
 
 .newsletter h2 {
@@ -441,9 +441,9 @@ section { padding: 96px 0; }
 
 .newsletter-form .btn { border: none; }
 
-/*
+/* ---------------------------------------------------------------
    Sub-page hero (shorter than the landing hero, no CTA row)
-*/
+--------------------------------------------------------------- */
 .page-hero {
   position: relative;
   height: 380px;
@@ -472,9 +472,9 @@ section { padding: 96px 0; }
 .page-hero h1 { font-size: 42px; max-width: none; margin-bottom: 10px; }
 .page-hero p { margin-bottom: 0; }
 
-/*
+/* ---------------------------------------------------------------
    Page intro (short lede under a sub-page hero)
-*/
+--------------------------------------------------------------- */
 .page-intro { padding-bottom: 64px; }
 .page-intro .wrap { max-width: 780px; text-align: center; }
 .page-intro h2 {
@@ -485,9 +485,9 @@ section { padding: 96px 0; }
 }
 .page-intro p { color: var(--parchment); font-size: 18px; margin: 0; }
 
-/*
+/* ---------------------------------------------------------------
    Playstyle entries
-*/
+--------------------------------------------------------------- */
 .playstyle {
   padding: 72px 0;
   border-top: 1px solid var(--hairline);
@@ -584,9 +584,9 @@ section { padding: 96px 0; }
   padding: 6px 14px;
 }
 
-/*
+/* ---------------------------------------------------------------
    Forge / Builds page
-*/
+--------------------------------------------------------------- */
 .build-block {
   padding: 76px 0;
   border-top: 1px solid var(--hairline);
@@ -669,9 +669,9 @@ section { padding: 96px 0; }
   color: var(--parchment);
   margin: 0;
 }
-/*
+/* ---------------------------------------------------------------
    Comparison table
-*/
+--------------------------------------------------------------- */
 .comparison { text-align: center; }
 
 .comparison h2 {
@@ -716,9 +716,9 @@ section { padding: 96px 0; }
 }
 
 .comparison tbody tr:last-child td { border-bottom: none; }
-/*
+/* ---------------------------------------------------------------
    Forum page
-*/
+--------------------------------------------------------------- */
 .forum-section { padding: 56px 0; }
 
 .forum-toolbar {
@@ -1060,10 +1060,10 @@ section { padding: 96px 0; }
 
 .thread-card.highlight-flash { animation: highlightFlash 2.2s ease; }
 
-/*
+/* ---------------------------------------------------------------
    Footer
    Matches the header's charcoal panel per reviewer feedback.
-*/
+--------------------------------------------------------------- */
 .site-footer {
   background: var(--charcoal);
   border-top: 1px solid var(--hairline);
@@ -1094,12 +1094,12 @@ section { padding: 96px 0; }
 }
 
 .footer-links a:hover { color: var(--gold); }
-/*
+/* ---------------------------------------------------------------
    Nav login / account dropdown
    auth.js swaps the plain <a class="nav-login"> for a <button> of
    the same class (styles above already cover both), wrapped in this
    positioned container so the panel can hang directly beneath it.
-*/
+--------------------------------------------------------------- */
 .nav-auth { position: relative; }
 
 .nav-login--user { padding: 6px 16px 6px 6px; }
@@ -1224,9 +1224,9 @@ section { padding: 96px 0; }
 
 .auth-menu-link:hover { color: var(--gold); }
 
-/*
+/* ---------------------------------------------------------------
    Profile page
-*/
+--------------------------------------------------------------- */
 .profile-hero {
   background: linear-gradient(160deg, var(--charcoal) 0%, var(--charcoal-soft) 55%, var(--void) 100%);
   border-bottom: 2px solid var(--hairline);
@@ -1242,72 +1242,143 @@ section { padding: 96px 0; }
 
 .profile-section { padding: 64px 0; }
 
-.profile-card {
+.profile-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ---- Sidebar ---- */
+.profile-sidebar {
   background: var(--charcoal);
   border: 1px solid var(--hairline);
   border-radius: 10px;
-  padding: 36px;
-  margin-bottom: 48px;
+  padding: 32px 24px;
+  text-align: center;
 }
 
-.profile-identity {
-  display: flex;
-  align-items: flex-start;
-  gap: 22px;
-  padding-bottom: 30px;
-  border-bottom: 1px solid var(--hairline);
-  margin-bottom: 30px;
-}
-
-.profile-avatar {
+.profile-avatar-circle {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  border: 3px solid var(--ember);
+  background: var(--charcoal-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: var(--ember);
-  color: var(--void);
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 700;
-  flex-shrink: 0;
+  overflow: hidden;
 }
 
-.profile-identity-text { flex: 1; }
+.profile-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.profile-identity-text h2 {
-  font-family: var(--font-display);
-  font-size: 28px;
-  color: var(--gold);
+.avatar-default-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--ember);
+}
+
+.avatar-error {
+  color: var(--ember-bright);
+  font-size: 11px;
   margin: 0 0 10px;
 }
+.avatar-error[hidden] { display: none; }
 
-.profile-badges { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--gold);
+  margin: 0 0 4px;
+}
 
-.rank-badge {
+.profile-hr-line {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ember-bright);
+  margin: 0 0 22px;
+}
+
+.profile-favored-block {
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  margin-bottom: 22px;
+}
+
+.favored-label {
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ember-bright);
+  color: var(--muted);
+  margin: 0 0 8px;
 }
 
-.profile-joined {
-  font-family: var(--font-ui);
-  font-size: 12px;
-  color: var(--muted);
+.favored-value {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--gold);
   margin: 0;
 }
 
-.profile-identity .profile-logout { flex-shrink: 0; }
+.favored-select {
+  width: 100%;
+  background: var(--void);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: var(--parchment);
+  font-family: var(--font-ui);
+  font-size: 13px;
+}
+
+.profile-sidebar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-sidebar-actions .btn,
+.profile-sidebar-actions .btn-small { width: 100%; }
+
+/* ---- Main content ---- */
+.profile-main .section-tag { margin-top: 40px; }
+.profile-main .section-tag:first-child { margin-top: 0; }
+
+.about-box {
+  background: var(--charcoal);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 20px 24px;
+  color: var(--parchment);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.about-textarea {
+  width: 100%;
+  min-height: 110px;
+  background: var(--void);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 16px 20px;
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 16px;
+  resize: vertical;
+}
 
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 20px;
 }
 
 .stat {
@@ -1335,56 +1406,37 @@ section { padding: 96px 0; }
   color: var(--muted);
 }
 
-.profile-favored {
+.posts-list {
+  list-style: none;
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 17px;
-  color: var(--parchment);
-}
-
-.profile-favored .section-tag { display: block; margin-bottom: 6px; }
-
-.profile-activity h2.forum-heading { margin-top: 0; }
-
-.activity-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-
-.activity-item {
+  padding: 0;
   background: var(--charcoal);
   border: 1px solid var(--hairline);
   border-radius: 8px;
-  padding: 18px 22px;
 }
 
-.activity-kind {
-  display: block;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ember-bright);
-  margin-bottom: 6px;
+.post-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--hairline);
 }
 
-.activity-title {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
+.post-row:last-child { border-bottom: none; }
 
-.activity-title:hover { text-decoration: underline; }
-
-.activity-snippet {
-  font-size: 14px;
+.post-row-title {
   color: var(--parchment);
-  margin: 0 0 8px;
+  font-size: 15px;
 }
 
-.activity-time {
+.post-row-title:hover { color: var(--gold); }
+
+.post-row-likes {
+  flex-shrink: 0;
   font-family: var(--font-ui);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--muted);
 }
 
