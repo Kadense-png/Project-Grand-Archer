@@ -1,11 +1,4 @@
-/* ===================================================================
-   Grand Archer Division — Hunter Profile
-   Stats are computed from the Forum's own localStorage data (no
-   separate profile database). Avatar, favored build, and bio are
-   editable and saved via GAAuth's profile-meta store — also
-   localStorage, also this-browser-only, same as everything else in
-   this demo.
-=================================================================== */
+// Stats come from the Forum's own localStorage data — no separate profile database. Avatar/favoredBuild/bio save through GAAuth's meta store, same browser-only setup as everything else.
 
 (function () {
   const POSTS_KEY = "ga_forum_posts";
@@ -44,8 +37,7 @@
     posts.forEach(p => (p.replies || []).forEach(r => { if (r.author === name) replies++; }));
     const likes = likesReceived(posts, name);
     const totalPosts = threads + replies;
-    // Flavor stats only — not meant to model the real games' numbers,
-    // just to scale up with activity and look the part.
+    // Flavor stats only — not meant to model the real game's numbers, just scale with activity.
     const hunterRank = 1 + threads * 4 + replies * 2 + Math.floor(likes / 3);
     const karma = likes * 3 + totalPosts * 2;
     return { threads, replies, likes, totalPosts, hunterRank, karma };
@@ -58,11 +50,7 @@
       .slice(0, limit);
   }
 
-  /* -----------------------------------------------------------------
-     Avatar upload — read the file, draw it into a square canvas at a
-     fixed max size, and export a compact JPEG data URL. Keeps
-     localStorage usage sane regardless of how big the source photo is.
-  ----------------------------------------------------------------- */
+// Reads the file, draws it into a square canvas, exports a compact JPEG data URL — keeps localStorage usage sane regardless of source photo size.
   function resizeImageFile(file) {
     return new Promise((resolve, reject) => {
       if (!file.type.startsWith("image/")) {
@@ -95,9 +83,7 @@
     });
   }
 
-  /* -----------------------------------------------------------------
-     Markup
-  ----------------------------------------------------------------- */
+// Markup
   const DEFAULT_AVATAR_SVG = `
     <svg viewBox="0 0 24 24" class="avatar-default-icon" aria-hidden="true">
       <circle cx="12" cy="8" r="4" fill="currentColor"/>
@@ -224,9 +210,7 @@
     `;
   }
 
-  /* -----------------------------------------------------------------
-     Wiring
-  ----------------------------------------------------------------- */
+// Wiring
   function wireLoggedOut(root) {
     root.querySelectorAll(".auth-tab").forEach(tab => {
       tab.addEventListener("click", () => {
