@@ -1,11 +1,4 @@
-/* ===================================================================
-   Grand Archer Division — Hunter Forum
-   Everything here runs in the browser only. Posts, roles, votes, and
-   the logged-in identity all live in localStorage, so they survive a
-   refresh but never leave this one browser/device. There is no
-   server — this is a demo of the moderation workflow, not a real
-   multi-user backend.
-=================================================================== */
+// Everything here lives in localStorage in this browser only — no server, no real accounts.
 
 const KEYS = {
   posts: "ga_forum_posts",
@@ -14,19 +7,12 @@ const KEYS = {
   schemaVersion: "ga_forum_schema_version"
 };
 
-/* Bump this whenever the shape of a post/user object changes (new
-   fields like likedBy/tags, a renamed founder, etc.). On mismatch,
-   loadPosts()/loadUsers() wipe the old saved data and reseed fresh
-   instead of crashing on missing fields from an older version. */
+// Bump this when a post/user's shape changes — mismatches wipe old data and reseed instead of crashing.
 const SCHEMA_VERSION = 2;
 
 const FOUNDER_NAME = "Kadense";
 
-/* ---------------------------------------------------------------
-   Seed data — only written the very first time the page loads on
-   a given browser. After that, everything below is ignored in
-   favor of whatever's already in localStorage.
---------------------------------------------------------------- */
+// Seed data — only used the first time this browser has no saved forum data.
 function seedUsers() {
   return {
     [FOUNDER_NAME]: "founder",
@@ -82,11 +68,7 @@ function seedPosts() {
   ];
 }
 
-/* ---------------------------------------------------------------
-   Migration — if this browser has data saved under an older schema
-   (missing fields, old founder name, etc.), wipe it and reseed
-   rather than letting the mismatch crash the render.
---------------------------------------------------------------- */
+// Wipes old-schema data and reseeds instead of crashing on missing fields.
 function ensureCurrentSchema() {
   const stored = localStorage.getItem(KEYS.schemaVersion);
   if (stored === String(SCHEMA_VERSION)) return;
@@ -96,9 +78,7 @@ function ensureCurrentSchema() {
   localStorage.setItem(KEYS.schemaVersion, String(SCHEMA_VERSION));
 }
 
-/* ---------------------------------------------------------------
-   Storage helpers
---------------------------------------------------------------- */
+// Storage helpers
 function loadUsers() {
   const raw = localStorage.getItem(KEYS.users);
   if (!raw) {
@@ -132,9 +112,7 @@ function loadCurrentUser(u) {
 
 function saveCurrentUser(name) { localStorage.setItem(KEYS.currentUser, name); }
 
-/* ---------------------------------------------------------------
-   State
---------------------------------------------------------------- */
+// State
 ensureCurrentSchema();
 let users = loadUsers();
 let posts = loadPosts();
@@ -147,9 +125,7 @@ function isModerator(username) {
   return r === "founder" || r === "moderator";
 }
 
-/* Defensive normalization: guarantees every post has the fields
-   newer code expects, even if it somehow slipped in from an older
-   or hand-edited localStorage entry. */
+// Makes sure every post has the fields newer code expects, even old/hand-edited data.
 function normalizePost(p) {
   p.tags = Array.isArray(p.tags) ? p.tags : [];
   p.likedBy = Array.isArray(p.likedBy) ? p.likedBy : [];
@@ -159,9 +135,7 @@ function normalizePost(p) {
 }
 posts = posts.map(normalizePost);
 
-/* ---------------------------------------------------------------
-   Formatting helpers
---------------------------------------------------------------- */
+// Formatting helpers
 function timeAgo(ts) {
   const sec = Math.floor((Date.now() - ts) / 1000);
   if (sec < 60) return "just now";
@@ -190,16 +164,12 @@ function roleBadge(username) {
   return "";
 }
 
-/* Members post anonymously to the public eye; staff choose to sign
-   their name. The real author is still tracked internally so pin/
-   promote controls keep working regardless of the display name. */
+// Members show up as Anonymous; mods/founder show their real name (author is still tracked internally).
 function displayName(username) {
   return isModerator(username) ? username : "Anonymous";
 }
 
-/* ---------------------------------------------------------------
-   Rendering
---------------------------------------------------------------- */
+// Rendering
 function renderIdentityBar() {
   const select = document.getElementById("identity-select");
   select.innerHTML = Object.keys(users)
@@ -311,9 +281,7 @@ function render() {
   attachCardEvents();
 }
 
-/* ---------------------------------------------------------------
-   Events
---------------------------------------------------------------- */
+// Events
 function copyPostLink(id, btn) {
   const url = `${location.origin}${location.pathname}#post-${id}`;
   const done = () => {
