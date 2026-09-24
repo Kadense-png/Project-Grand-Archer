@@ -1,8 +1,4 @@
-/* ===================================================================
-   Grand Archer Division — style.css
-   Landing page, desktop viewport only.
-   Palette + type per project style guide (Cinzel / Inter / Crimson Pro).
-=================================================================== */
+/* Grand Archer Division — style.css Landing page, desktop viewport only. Palette + type per project style guide (Cinzel / Inter / Crimson Pro). */
 
 :root {
   --void: #0B0906;
@@ -66,11 +62,7 @@ input:focus-visible {
   clip: rect(0 0 0 0);
 }
 
-/* ---------------------------------------------------------------
-   Header / persistent navigation
-   Uses the same charcoal as the footer per reviewer feedback,
-   instead of a header/footer color mismatch.
---------------------------------------------------------------- */
+/* Header / persistent navigation Uses the same charcoal as the footer per reviewer feedback, instead of a header/footer color mismatch. */
 .site-header {
   position: sticky;
   top: 0;
@@ -151,9 +143,7 @@ input:focus-visible {
   border-color: var(--gold);
 }
 
-/* ---------------------------------------------------------------
-   Buttons
---------------------------------------------------------------- */
+/* Buttons */
 .btn {
   display: inline-block;
   font-family: var(--font-ui);
@@ -191,9 +181,7 @@ input:focus-visible {
   color: var(--gold);
 }
 
-/* ---------------------------------------------------------------
-   Hero
---------------------------------------------------------------- */
+/* Hero */
 .hero {
   position: relative;
   height: 640px;
@@ -214,8 +202,7 @@ input:focus-visible {
   object-fit: cover;
 }
 
-/* Gradient runs flush from the image's own bottom edge into the page
-   background, so the fade never looks clipped or offset. */
+/* Gradient runs flush from the image's own bottom edge into the page background, so the fade never looks clipped or offset. */
 .hero-media::after {
   content: "";
   position: absolute;
@@ -266,11 +253,7 @@ input:focus-visible {
 
 .hero-actions { display: flex; gap: 16px; }
 
-/* ---------------------------------------------------------------
-   Section rhythm
-   Alternating charcoal / void backgrounds give each section its own
-   depth instead of one flat black field, per reviewer feedback.
---------------------------------------------------------------- */
+/* Section rhythm Alternating charcoal / void backgrounds give each section its own depth instead of one flat black field, per reviewer feedback. */
 section { padding: 96px 0; }
 
 .section-charcoal {
@@ -288,9 +271,7 @@ section { padding: 96px 0; }
   margin: 0 0 10px;
 }
 
-/* ---------------------------------------------------------------
-   Recruitment / about section
---------------------------------------------------------------- */
+/* Recruitment / about section */
 .about-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -348,9 +329,7 @@ section { padding: 96px 0; }
   line-height: 1.6;
 }
 
-/* ---------------------------------------------------------------
-   Trailer section
---------------------------------------------------------------- */
+/* Trailer section */
 .trailer {
   text-align: center;
 }
@@ -396,9 +375,7 @@ section { padding: 96px 0; }
   color: var(--muted);
 }
 
-/* ---------------------------------------------------------------
-   Newsletter / "Stay in the Know"
---------------------------------------------------------------- */
+/* Newsletter / "Stay in the Know" */
 .newsletter { text-align: center; }
 
 .newsletter h2 {
@@ -441,9 +418,7 @@ section { padding: 96px 0; }
 
 .newsletter-form .btn { border: none; }
 
-/* ---------------------------------------------------------------
-   Sub-page hero (shorter than the landing hero, no CTA row)
---------------------------------------------------------------- */
+/* Sub-page hero (shorter than the landing hero, no CTA row) */
 .page-hero {
   position: relative;
   height: 380px;
@@ -472,9 +447,7 @@ section { padding: 96px 0; }
 .page-hero h1 { font-size: 42px; max-width: none; margin-bottom: 10px; }
 .page-hero p { margin-bottom: 0; }
 
-/* ---------------------------------------------------------------
-   Page intro (short lede under a sub-page hero)
---------------------------------------------------------------- */
+/* Page intro (short lede under a sub-page hero) */
 .page-intro { padding-bottom: 64px; }
 .page-intro .wrap { max-width: 780px; text-align: center; }
 .page-intro h2 {
@@ -485,9 +458,7 @@ section { padding: 96px 0; }
 }
 .page-intro p { color: var(--parchment); font-size: 18px; margin: 0; }
 
-/* ---------------------------------------------------------------
-   Playstyle entries
---------------------------------------------------------------- */
+/* Playstyle entries */
 .playstyle {
   padding: 72px 0;
   border-top: 1px solid var(--hairline);
@@ -584,9 +555,7 @@ section { padding: 96px 0; }
   padding: 6px 14px;
 }
 
-/* ---------------------------------------------------------------
-   Forge / Builds page
---------------------------------------------------------------- */
+/* Forge / Builds page */
 .build-block {
   padding: 76px 0;
   border-top: 1px solid var(--hairline);
@@ -669,9 +638,7 @@ section { padding: 96px 0; }
   color: var(--parchment);
   margin: 0;
 }
-/* ---------------------------------------------------------------
-   Comparison table
---------------------------------------------------------------- */
+/* Comparison table */
 .comparison { text-align: center; }
 
 .comparison h2 {
@@ -716,9 +683,7 @@ section { padding: 96px 0; }
 }
 
 .comparison tbody tr:last-child td { border-bottom: none; }
-/* ---------------------------------------------------------------
-   Forum page
---------------------------------------------------------------- */
+/* Forum page */
 .forum-section { padding: 56px 0; }
 
 .forum-toolbar {
@@ -1060,10 +1025,7 @@ section { padding: 96px 0; }
 
 .thread-card.highlight-flash { animation: highlightFlash 2.2s ease; }
 
-/* ---------------------------------------------------------------
-   Footer
-   Matches the header's charcoal panel per reviewer feedback.
---------------------------------------------------------------- */
+/* Footer Matches the header's charcoal panel per reviewer feedback. */
 .site-footer {
   background: var(--charcoal);
   border-top: 1px solid var(--hairline);
@@ -1094,12 +1056,7 @@ section { padding: 96px 0; }
 }
 
 .footer-links a:hover { color: var(--gold); }
-/* ---------------------------------------------------------------
-   Nav login / account dropdown
-   auth.js swaps the plain <a class="nav-login"> for a <button> of
-   the same class (styles above already cover both), wrapped in this
-   positioned container so the panel can hang directly beneath it.
---------------------------------------------------------------- */
+/* Nav login / account dropdown auth.js swaps the plain <a class="nav-login"> for a <button> of the same class (styles above already cover both), wrapped in this positioned container so the panel can hang directly beneath it. */
 .nav-auth { position: relative; }
 
 .nav-login--user { padding: 6px 16px 6px 6px; }
@@ -1224,9 +1181,7 @@ section { padding: 96px 0; }
 
 .auth-menu-link:hover { color: var(--gold); }
 
-/* ---------------------------------------------------------------
-   Profile page
---------------------------------------------------------------- */
+/* Profile page */
 .profile-hero {
   background: linear-gradient(160deg, var(--charcoal) 0%, var(--charcoal-soft) 55%, var(--void) 100%);
   border-bottom: 2px solid var(--hairline);
@@ -1249,7 +1204,7 @@ section { padding: 96px 0; }
   align-items: start;
 }
 
-/* ---- Sidebar ---- */
+/* Sidebar */
 .profile-sidebar {
   background: var(--charcoal);
   border: 1px solid var(--hairline);
@@ -1348,7 +1303,7 @@ section { padding: 96px 0; }
 .profile-sidebar-actions .btn,
 .profile-sidebar-actions .btn-small { width: 100%; }
 
-/* ---- Main content ---- */
+/* Main content */
 .profile-main .section-tag { margin-top: 40px; }
 .profile-main .section-tag:first-child { margin-top: 0; }
 
