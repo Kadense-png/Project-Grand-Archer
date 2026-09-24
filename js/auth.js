@@ -1,17 +1,4 @@
-/* ===================================================================
-   Grand Archer Division — site-wide session/login
-   Shares the same localStorage "hunter" store the Forum already reads
-   and writes (ga_forum_users, ga_forum_current_user), so logging in
-   from the header and switching identity in the Forum both point at
-   the same person. The one thing this file adds on top is
-   ga_session_active — that's what tells "someone actually logged in"
-   apart from "the Forum is defaulting to Founder so a grader can
-   preview moderator tools." No password, no server: same demo
-   account switcher as the Forum, just wearing a login form's clothes.
-
-   Include this file on every page that has the shared header — it
-   finds .nav-login and wires itself in. No other HTML changes needed.
-=================================================================== */
+// Site-wide login. Shares the Forum's localStorage user store, so logging in here and switching identity in the Forum point at the same account. No password, no server — same demo switcher, just wearing a login form's clothes.
 
 (function () {
   const KEYS = {
@@ -50,9 +37,7 @@
     return localStorage.getItem(KEYS.sessionActive) === "1";
   }
 
-  /* Only returns a name if someone has actually logged in through the
-     nav or the Profile page — NOT just whatever the Forum's identity
-     switcher happens to be previewing right now. */
+// Only counts as logged in if someone actually logged in here — not just the Forum previewing an identity.
   function getCurrentUser() {
     if (!isSessionActive()) return null;
     const users = loadUsers();
@@ -72,9 +57,7 @@
     return meta[name] ? meta[name].joinedAt : null;
   }
 
-  /* Generic profile fields — avatar (a resized data: URL), favoredBuild
-     (one of PROFILE_BUILD_OPTIONS) and bio all live in the same
-     per-user meta blob as joinedAt. */
+// Avatar, favoredBuild, and bio all live in this same per-user meta blob.
   function getProfile(name) {
     const meta = loadMeta();
     return meta[name] || {};
@@ -132,12 +115,7 @@
     getProfile, updateProfile, PROFILE_BUILD_OPTIONS
   };
 
-  /* -----------------------------------------------------------------
-     Nav wiring — replaces the header's "Log In" pill with a working
-     dropdown, or, if someone's already logged in, a name + quick menu.
-     Runs on whatever page includes this file; requires nothing more
-     than the existing <a class="nav-login"> already in every header.
-  ----------------------------------------------------------------- */
+// Replaces the header's Log In pill with a working dropdown, or a name + menu if already logged in.
   function onProfilePage() {
     return /GrandArcher-Profile\.html$/i.test(location.pathname);
   }
@@ -153,10 +131,7 @@
     return div.innerHTML;
   }
 
-  /* Same fallback logic the Profile page uses: a real photo if one's
-     been uploaded, otherwise the initial-letter circle. Used for both
-     the collapsed nav pill and the expanded dropdown so they can never
-     drift out of sync with each other. */
+// Real photo if uploaded, otherwise an initial-letter circle — same fallback the Profile page uses.
   function navAvatarHTML(name) {
     const avatar = getProfile(name).avatar;
     return avatar
