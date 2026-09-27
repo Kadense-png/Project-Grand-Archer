@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bow Playstyles — Grand ☆ Archer Division</title>
 <meta name="description" content="The four core Bow playstyles in Monster Hunter Wilds — Dash Dancing, Dragonpiercer Sniping, 8-Gauge Bow, and Hybrid — compared side by side.">
 <link rel="icon" type="image/svg+xml" href="imgs/favicon.svg">
@@ -27,6 +28,9 @@
       </ul>
       <a href="#" class="nav-login">Log In</a>
     </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -49,7 +53,8 @@
   <section class="page-intro">
     <div class="wrap">
       <h2>Four Ways to Loose an Arrow</h2>
-      <p>The Bow rewards constant repositioning, focus mode, and stamina management over raw combos — which means there isn't one "correct" way to play it. Below are the four playstyles we see the most in the field, ranked by how much they ask of you. Pick the one that matches your pace, or steal a bit from each once you've got the fundamentals down.</p>
+      <p>The Bow is the most (self-proclaimed) flexible and stylish weapon in Monster Hunter Wilds. It rewards constant repositioning, and stamina management over raw combos or button mashing — which means there isn't one "correct" way to play it. Below are the four playstyles we see the most in the field, ranked by how much they ask of you. Pick the one that matches your pace, or steal a bit from each once you've got the fundamentals down.
+      </p>
     </div>
   </section>
 
@@ -61,17 +66,17 @@
         <div class="playstyle-heading">
           <h3>Dash Dancing</h3>
           <span class="stars" aria-label="Difficulty: Hard, 4 out of 5">
-            <span class="filled">★★★★</span><span>☆</span>
+            <span class="filled">★★</span><span>☆☆☆</span>
           </span>
         </div>
         <p class="playstyle-meta">
           <span><strong>Range:</strong> Short&ndash;Mid</span>
           <span><strong>Focus:</strong> Repositioning</span>
         </p>
-        <p class="desc">Built around Dash Dancing's dodge-and-fire rhythm — you're rarely standing still. Circle the target, slot in charged shots between steps, and let Shooting Booster keep your uptime honest even when you're spending half the fight sidestepping tail swipes.</p>
+        <p class="desc">Dash dancing takes advantage of the bow's unique dodge. Used after shooting in focus mode it becomes a Charging Sidestep (CS). Timed perfectly against an incoming attack it becomes a Discerning Dodge (DD) — restoring stamina and granting two charge levels instantly. Near 100% uptime; any monster becomes a pincushion while you remain untouchable.</p>
         <div class="tag-row">
-          <span class="tag">Shooting Booster</span>
-          <span class="tag">HFB Coating</span>
+          <span class="tag">Dash Dancing</span>
+          <span class="tag">Uptime</span>
         </div>
       </div>
       <figure class="playstyle-figure">
@@ -84,24 +89,25 @@
   <section class="playstyle has-image img-left section-charcoal">
     <div class="wrap">
       <figure class="playstyle-figure">
-        <img src="imgs/Dashdancing.png" alt="A hunter firing a Dragon Piercer shot at a sleeping monster from across an open grass plain.">
+        <img src="imgs/Dragonpiercer Sniping.png" alt="A hunter firing a Dragon Piercer shot at a sleeping monster from across an open grass plain.">
       </figure>
       <div>
         <p class="playstyle-number">Playstyle 02</p>
         <div class="playstyle-heading">
           <h3>Dragonpiercer Sniping</h3>
           <span class="stars" aria-label="Difficulty: Expert, 5 out of 5">
-            <span class="filled">★★★★★</span>
+            <span class="filled">★★★★</span><span>☆</span>
           </span>
         </div>
         <p class="playstyle-meta">
           <span><strong>Range:</strong> Long</span>
           <span><strong>Focus:</strong> Precision burst</span>
         </p>
-        <p class="desc">The patient build. You give up sustained pressure for one shot that actually matters — tracking a weak point, holding position, and cashing it in the moment the window opens. Punishing to learn, but nothing else in the kit hits this hard from this far away.</p>
+        <p class="desc">Built around the Dragonpiercer (DP) — a unique piercing move that also deals slicing damage, enabling tail severing. Its effective range far exceeds the bow's normal Critical Range, enabling true long-range sniping. Nerfed in recent patches, but with modern builds and proper skill investment it keeps pace with Dash Dancing.</p>
         <div class="tag-row">
-          <span class="tag">Power Coating</span>
-          <span class="tag">Weak-Point Timing</span>
+          <span class="tag">Pierce Coating</span>
+          <span class="tag">Range</span>
+          <span class="tag">Patience</span>
         </div>
       </div>
     </div>
@@ -115,17 +121,19 @@
         <div class="playstyle-heading">
           <h3>8-Gauge Bow</h3>
           <span class="stars" aria-label="Difficulty: Moderate, 2 out of 5">
-            <span class="filled">★★</span><span>☆☆☆</span>
+            <span class="filled">★★★★★★★★</span><span></span>
           </span>
         </div>
         <p class="playstyle-meta">
           <span><strong>Range:</strong> Short</span>
           <span><strong>Focus:</strong> Sustained pressure</span>
         </p>
-        <p class="desc">The easiest on-ramp into ranged play. Get in close, spam your spread shots, and trade a bit of safety for near-constant uptime. Less flashy than the other three, but forgiving enough that it's usually where newer bow users start before branching out.</p>
+        <p class="desc">The one off-meta entry — and it fully owns it. Built around hugging the monster and taking FULL advantage of Close-range coatings and DD to deal massive point-blank damage chunks using Thousand Dragons and Power Shots, which are all Spread attacks. Be fully aware that this build, as a primary playstyle, is NOT optimal, but it is VERY funny if you get to slay a monster with the last-hit being Thousand Dragons</p>
         <div class="tag-row">
-          <span class="tag">Spread Shot</span>
+          <span class="tag">Thousand Dragons</span>
           <span class="tag">Close Quarters</span>
+          <span class="tag">Spread</span>
+          <span class="tag">Silly</span>
         </div>
       </div>
       <figure class="playstyle-figure">
@@ -152,9 +160,9 @@
           <span><strong>Range:</strong> All-range</span>
           <span><strong>Focus:</strong> Adaptive</span>
         </p>
-        <p class="desc">Dash Dancing footwork with Dragonpiercer timing, swapped mid-hunt depending on the matchup. Nothing about Hybrid is beginner-friendly — it asks you to already be comfortable with the other three before it starts paying off — but it's the closest thing the Bow has to a "does everything" answer.</p>
+        <p class="desc">Everything in one. A jack of all trades — but remember the full saying: more oftentimes better than a master of one. Sacrifice some comfort or defensive skills for damage, rely on your own read of DD to consistently dodge attacks, and use everything in the bow's arsenal. The most fun and skill-intensive playstyle bow has to offer.</p>
         <div class="tag-row">
-          <span class="tag">Blast Coating</span>
+          <span class="tag">Jack of all trades</span>
           <span class="tag">Adaptable</span>
           <span class="tag">Skill-Heavy</span>
         </div>
@@ -179,17 +187,17 @@
           <tr>
             <td>Dash Dancing</td>
             <td>Short&ndash;Mid</td>
-            <td><span class="stars" aria-label="4 out of 5"><span class="filled">★★★★</span><span>☆</span></span></td>
+            <td><span class="stars" aria-label="4 out of 5"><span class="filled">★★</span><span>☆☆☆</span></span></td>
           </tr>
           <tr>
             <td>Dragonpiercer Sniping</td>
             <td>Long</td>
-            <td><span class="stars" aria-label="5 out of 5"><span class="filled">★★★★★</span></span></td>
+            <td><span class="stars" aria-label="5 out of 5"><span class="filled">★★★★</span>☆</span></td>
           </tr>
           <tr>
             <td>8-Gauge Bow</td>
             <td>Short</td>
-            <td><span class="stars" aria-label="2 out of 5"><span class="filled">★★</span><span>☆☆☆</span></span></td>
+            <td><span class="stars" aria-label="2 out of 5"><span class="filled">★★★★★★★★</span><span></span></span></td>
           </tr>
           <tr>
             <td>Hybrid</td>
@@ -217,6 +225,7 @@
 </footer>
 
 <script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
 
 </body>
 </html>

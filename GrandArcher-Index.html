@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grand ☆ Archer Division — Missing? We don't do that here.</title>
 <meta name="description" content="An unofficial hall for Bow users and ranged hunters in Monster Hunter Wilds — playstyles, builds, and a forum built around one weapon.">
 <link rel="icon" type="image/svg+xml" href="Imgs/favicon.svg">
@@ -28,6 +29,9 @@
       </ul>
       <a href="#" class="nav-login">Log In</a>
     </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -42,7 +46,7 @@
       <div class="wrap">
         <p class="hero-eyebrow">Hunter's Guild &middot; Monster Hunter Wilds</p>
         <h1>Grand <span class="accent">☆</span> Archer Division</h1>
-        <p>Welcome to the hall, Hunter. Here we talk shop, share tactics, and rank the Archer's best — no melee opinions allowed.</p>
+        <p>Welcome to the hall, Hunter. Here we talk shop, share tactics, and rank the Archer's best.</p>
         <div class="hero-actions">
           <a href="GrandArcher-Playstyles.html" class="btn btn-primary">Explore Playstyles</a>
           <a href="#trailer" class="btn btn-outline">Watch Trailer</a>
@@ -59,7 +63,8 @@
         <h2>Grand ☆ Archer Division</h2>
         <p class="subtitle">Field Division / Ranged Arms</p>
         <p>Whether you're a seasoned bowman or just picked up your first bow, this hall exists to help hunters sharpen their aim and share what they've learned in the field.</p>
-        <p>Bow rewards constant repositioning, stamina management, and precise play rather than raw, simple, mindless melee combos — and most general hunting-guild resources treat it as an afterthought. So we built one specifically for us.</p>
+        <p>Bow rewards constant repositioning, stamina management, and precise play rather than raw button mashing — and most general hunting-guild resources treat it as an afterthought, because its 'more trouble than its worth'. So we built one specifically for us.</p>
+        <p>Browse our field guides, study the division's recognized playstyles, or visit the Hunter Hall if you've got a question.</p>
       </div>
       <aside class="notice-card">
         <p class="notice-label">Trainer Notice</p>
@@ -100,7 +105,7 @@
       <h2>Join the Board</h2>
       <p>Guild updates, patch notes, and the odd build that breaks the meta — straight to your inbox, no spam attached.</p>
       <form class="newsletter-form" action="#" method="post">
-        <label for="newsletter-email">Email address</label>
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
         <input type="email" id="newsletter-email" name="email" placeholder="hunter@example.com" required>
         <button type="submit" class="btn btn-primary">Join the Board</button>
       </form>
@@ -124,6 +129,7 @@
 </footer>
 
 <script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
 
 </body>
 </html>

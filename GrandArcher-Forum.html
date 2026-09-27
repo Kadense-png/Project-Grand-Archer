@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hunter Forum — Grand ☆ Archer Division</title>
 <meta name="description" content="An anonymous, searchable board for Bow and ranged hunters to ask and answer questions without judgment.">
 <link rel="icon" type="image/svg+xml" href="imgs/favicon.svg">
@@ -27,6 +28,9 @@
       </ul>
       <a href="#" class="nav-login">Log In</a>
     </nav>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -49,7 +53,7 @@
   <section class="page-intro">
     <div class="wrap">
       <h2>Ask Without Judgment</h2>
-      <p>An anonymous, searchable board where hunters can ask and answer Bow, Monster Hunter specific, or just whatever questions you've got — all opinions, queries, whatever, are welcome, just remember to play nice. Pinned notices from the Division sit up top; everything else runs newest-first below.</p>
+      <p>An anonymous, searchable board where hunters can ask and answer Bow questions, trade tips, and swap stories from the field. Pinned notices from the Division sit up top; everything else runs newest-first below.</p>
     </div>
   </section>
 
@@ -122,6 +126,7 @@
 </footer>
 
 <script src="js/auth.js"></script>
+<script src="js/nav.js"></script>
 <script src="js/forum.js"></script>
 
 </body>
