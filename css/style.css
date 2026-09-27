@@ -29,7 +29,6 @@ body {
   font-family: var(--font-body);
   font-size: 18px;
   line-height: 1.65;
-  min-width: 1180px; /* desktop only build */
 }
 
 img { max-width: 100%; display: block; }
@@ -142,6 +141,33 @@ input:focus-visible {
   color: var(--gold);
   border-color: var(--gold);
 }
+
+/* Hamburger toggle, hidden until the mobile breakpoint turns it on */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--parchment);
+  border-radius: 2px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* Buttons */
 .btn {
@@ -1423,3 +1449,175 @@ section { padding: 96px 0; }
 .profile-guest .auth-form { text-align: left; }
 
 .profile-auth-form .btn { width: 100%; }
+/* Tablet viewport, roughly 768–1024px. Mobile-specific rules (hamburger nav, single-column everything) come later and will override these where needed. */
+@media (max-width: 1024px) {
+
+  .wrap { padding: 0 28px; }
+
+  section { padding: 64px 0; }
+
+  /* tighter header so five nav links + the login pill still fit on one line */
+  .main-nav { gap: 22px; }
+  .main-nav ul { gap: 18px; }
+
+  /* landing hero */
+  .hero { height: 480px; }
+  .hero h1 { font-size: 38px; }
+  .hero p { font-size: 17px; }
+  .hero-actions { flex-wrap: wrap; }
+
+  /* shared sub-page hero (Playstyles, Forge, Forum, Profile) */
+  .page-hero { height: 300px; }
+  .page-hero h1 { font-size: 34px; }
+  .page-intro { padding-bottom: 48px; }
+
+  /* recruitment section drops to one column, notice card falls below the text */
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .about-grid h2 { font-size: 28px; }
+
+  .trailer h2 { font-size: 26px; }
+  .newsletter h2 { font-size: 24px; }
+
+  /* playstyle image/text pairs stay side by side, just tighter */
+  .playstyle { padding: 56px 0; }
+  .playstyle.has-image .wrap,
+  .playstyle.has-image.img-left .wrap {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .playstyle h3 { font-size: 24px; }
+
+  /* forge build gallery drops from 3 columns to 2 */
+  .build-block { padding: 56px 0; }
+  .build-header h3 { font-size: 26px; }
+  .build-gallery { grid-template-columns: repeat(2, 1fr); }
+  .build-card img { height: 260px; }
+
+  .comparison h2 { font-size: 24px; }
+  .comparison th, .comparison td { padding: 12px 14px; }
+
+  /* forum identity bar already wraps; just tighten the gap */
+  .identity-bar { gap: 14px; }
+
+  /* profile sidebar stacks above the main column instead of sitting beside it */
+  .profile-hero h1 { font-size: 34px; }
+  .profile-layout { grid-template-columns: 1fr; }
+  .profile-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile viewport, roughly 640px and below. Layers on top of the tablet rules above — anything not overridden here (single-column grids, etc.) is already inherited. */
+@media (max-width: 640px) {
+
+  .wrap { padding: 0 20px; }
+
+  section { padding: 48px 0; }
+
+  /* header collapses to wordmark + hamburger; the nav itself becomes a dropdown panel */
+  .site-header { position: relative; }
+  .nav-toggle { display: flex; }
+
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--charcoal);
+    border-bottom: 1px solid var(--hairline);
+    padding: 8px 20px 20px;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .main-nav.open { display: flex; }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .main-nav ul li { border-bottom: 1px solid var(--hairline); }
+  .main-nav ul li:last-child { border-bottom: none; }
+
+  .main-nav a {
+    display: block;
+    padding: 14px 4px;
+  }
+
+  .main-nav a.active {
+    border-bottom: none;
+    border-left: 3px solid var(--ember-bright);
+    padding-left: 12px;
+    background: rgba(255, 210, 48, 0.06);
+  }
+
+  /* login widget stacks full-width inside the open mobile menu instead of floating top-right */
+  .nav-auth, .nav-login { width: 100%; margin-top: 14px; }
+  .nav-login { justify-content: center; }
+  .login-dropdown { position: static; width: 100%; margin-top: 10px; box-shadow: none; }
+
+  /* landing hero */
+  .hero { height: 380px; }
+  .hero h1 { font-size: 30px; }
+  .hero p { font-size: 16px; }
+  .hero-actions { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+  .hero-actions .btn { padding: 12px 20px; font-size: 12px; width: auto; }
+
+  /* shared sub-page hero */
+  .page-hero { height: 240px; }
+  .page-hero h1 { font-size: 28px; }
+  .page-intro { padding-bottom: 36px; }
+  .page-intro h2 { font-size: 24px; }
+
+  .about-grid h2 { font-size: 24px; }
+  .trailer h2 { font-size: 22px; }
+  .newsletter h2 { font-size: 20px; }
+
+  .newsletter-form { flex-direction: column; }
+  .newsletter-form input[type="email"],
+  .newsletter-form .btn { width: 100%; }
+
+  /* playstyle image/text pairs stack; source order already alternates image-first vs text-first per section */
+  .playstyle { padding: 40px 0; }
+  .playstyle.has-image .wrap,
+  .playstyle.has-image.img-left .wrap {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .playstyle h3 { font-size: 22px; }
+
+  /* forge build gallery drops to a single column */
+  .build-block { padding: 40px 0; }
+  .build-header h3 { font-size: 22px; }
+  .build-gallery { grid-template-columns: 1fr; }
+  .build-card img { height: 220px; }
+
+  .comparison h2 { font-size: 22px; }
+  .comparison th, .comparison td { padding: 10px 8px; font-size: 13px; }
+
+  /* forum toolbar and identity bar stack full-width */
+  .forum-toolbar { flex-direction: column; }
+  .identity-bar { flex-direction: column; align-items: stretch; }
+  .identity-bar .identity-group { justify-content: space-between; }
+  .identity-bar form { margin-left: 0; width: 100%; }
+  .identity-bar select,
+  .identity-bar input[type="text"] { flex: 1; }
+  .demo-notice { flex-direction: column; align-items: stretch; }
+  .demo-notice .btn-small { width: 100%; }
+
+  /* thread cards: tighter padding, compact inline votes instead of bulky stacked pills */
+  .thread-card { padding: 18px 20px; }
+  .thread-top { flex-direction: row; align-items: flex-start; gap: 12px; }
+  .vote-group { flex-direction: row; gap: 6px; flex-shrink: 0; }
+  .vote-btn { padding: 4px 9px; font-size: 11px; min-width: auto; }
+  .thread-actions .btn-small { padding: 8px 14px; font-size: 11px; }
+
+  .profile-hero h1 { font-size: 28px; }
+
+  /* footer stacks and centers instead of a cramped space-between row */
+  .site-footer .wrap { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-links { justify-content: center; flex-wrap: wrap; }
+}
