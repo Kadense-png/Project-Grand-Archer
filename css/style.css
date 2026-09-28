@@ -1602,7 +1602,7 @@ section { padding: 96px 0; }
   .forum-toolbar { flex-direction: column; }
   .identity-bar { flex-direction: column; align-items: stretch; }
   .identity-bar .identity-group { justify-content: space-between; }
-  .identity-bar form { margin-left: 0; width: 100%; }
+  .identity-bar form { margin-left: 0; width: 100%; flex-direction: column; }
   .identity-bar select,
   .identity-bar input[type="text"] { flex: 1; }
   .demo-notice { flex-direction: column; align-items: stretch; }
