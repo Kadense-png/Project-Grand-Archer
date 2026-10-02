@@ -1648,10 +1648,15 @@ section { padding: 96px 0; }
   .site-header { position: static; border-bottom: 2px solid var(--hairline); }
   .main-nav, .nav-toggle { display: none !important; }
 
-  /* hero: drop the full-bleed photo/overlay, keep it to plain text */
-  .hero { height: auto; display: block; }
-  .hero-media { display: none; }
-  .hero-content { position: static; padding: 0 0 20px; }
+  /* hero: faded grayscale photo as a quiet backdrop - gradient is hidden since it fades into black and the page is white now, opacity lives on the img itself so it's one fade instead of two stacking */
+  .hero { height: 300px; }
+  .hero-media::after { display: none; }
+  .hero-media img {
+    filter: grayscale(1) contrast(0.9) opacity(0.35);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .hero-content { padding-bottom: 20px; }
   .hero h1 { color: var(--parchment); text-shadow: none; }
   .hero-actions { display: none; }
 
