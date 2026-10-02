@@ -1621,3 +1621,53 @@ section { padding: 96px 0; }
   .site-footer .wrap { flex-direction: column; gap: 16px; text-align: center; }
   .footer-links { justify-content: center; flex-wrap: wrap; }
 }
+/* Print. Flips the color tokens to a light, ink-friendly palette — most components inherit this for free since they're all built on these variables. Page-specific hides/resets below are for the Hall page (index.html) for now; other pages get their own pass next. */
+@media print {
+
+  @page { margin: 1.5cm; }
+
+  :root {
+    --void: #FFFFFF;
+    --charcoal: #F2EFE9;
+    --charcoal-soft: #FFFFFF;
+    --ember: #8A4D0F;
+    --ember-bright: #6E3D0C;
+    --gold: #7A5A00;
+    --parchment: #1C1712;
+    --muted: #55504A;
+    --hairline: rgba(0, 0, 0, 0.18);
+  }
+
+  * { box-shadow: none !important; text-shadow: none !important; }
+
+  a { text-decoration: underline; }
+
+  section { padding: 28px 0; }
+
+  /* nav is non-functional on paper; keep just the wordmark as a letterhead */
+  .site-header { position: static; border-bottom: 2px solid var(--hairline); }
+  .main-nav, .nav-toggle { display: none !important; }
+
+  /* hero: drop the full-bleed photo/overlay, keep it to plain text */
+  .hero { height: auto; display: block; }
+  .hero-media { display: none; }
+  .hero-content { position: static; padding: 0 0 20px; }
+  .hero h1 { color: var(--parchment); text-shadow: none; }
+  .hero-actions { display: none; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 20px; }
+  .notice-card { background: var(--charcoal); }
+
+  /* can't embed or click a video on paper — drop the player, print the link instead */
+  .trailer-frame { display: none; }
+  .trailer-caption a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-style: italic;
+  }
+
+  /* a signup form that can't be submitted has no reason to print */
+  .newsletter { display: none; }
+
+  .site-footer { border-top: 2px solid var(--hairline); }
+  .footer-links { display: none; }
+}
